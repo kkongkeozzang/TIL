@@ -1,25 +1,29 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
 import dto.ContactDTO;
 
 public class ContactDAO {
 	
+	private BasicDataSource bds = new BasicDataSource();
+	
+	public ContactDAO() {
+		bds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+		bds.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
+		bds.setUsername("kh");
+		bds.setPassword("kh");
+		bds.setInitialSize(30);
+	}
+	
 	private Connection getConnection() throws Exception {
-		String userName = "kh";
-		String password = "kh";
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection con = DriverManager.getConnection(url,userName,password);
-		return con;
+		return bds.getConnection();
 	}
 	
 	public int insert(String name, String contact) throws Exception {
