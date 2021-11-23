@@ -17,7 +17,7 @@ import dao.ContactDAO;
 public class InputProc extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ContactDAO dao = new ContactDAO();
+		ContactDAO dao = ContactDAO.getInstance();
 		
 		String name = request.getParameter("name");
 		String contact = request.getParameter("contact");

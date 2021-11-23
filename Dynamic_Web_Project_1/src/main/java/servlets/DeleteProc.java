@@ -18,7 +18,7 @@ public class DeleteProc extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int delID = Integer.parseInt(request.getParameter("delID"));
 		
-		ContactDAO dao = new ContactDAO();
+		ContactDAO dao = ContactDAO.getInstance();
 		
 		try {
 			int result = dao.delete(delID);

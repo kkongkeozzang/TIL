@@ -18,7 +18,7 @@ public class OutputProc extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter pw = response.getWriter();
-		ContactDAO dao = new ContactDAO();
+		ContactDAO dao = ContactDAO.getInstance();
 		try {
 			List<ContactDTO> list = dao.selectAll();
 			

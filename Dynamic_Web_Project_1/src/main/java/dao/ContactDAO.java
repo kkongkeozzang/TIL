@@ -14,7 +14,15 @@ public class ContactDAO {
 	
 	private BasicDataSource bds = new BasicDataSource();
 	
-	public ContactDAO() {
+	private static ContactDAO instance = null;
+	public static ContactDAO getInstance() {
+		if(instance == null) {
+			instance = new ContactDAO();
+		}
+		return instance;
+	}
+	
+	private ContactDAO() {
 		bds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
 		bds.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
 		bds.setUsername("kh");

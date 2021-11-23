@@ -18,7 +18,7 @@ public class ModifyProc extends HttpServlet {
 		String contact = request.getParameter("modifyContact");
 		int seq = Integer.parseInt(request.getParameter("modifyId"));
 		
-		ContactDAO dao = new ContactDAO();
+		ContactDAO dao = ContactDAO.getInstance();
 		try {
 			int result = dao.modify(seq,name,contact);
 			response.sendRedirect("OutputProc");
