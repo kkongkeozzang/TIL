@@ -21,53 +21,8 @@ public class OutputProc extends HttpServlet {
 		ContactDAO dao = ContactDAO.getInstance();
 		try {
 			List<ContactDTO> list = dao.selectAll();
-			
-			pw.append("<html>");
-			pw.append("<head>");
-			pw.append("</head>");
-			pw.append("<body>");
-			pw.append("<table border=1 align=center>");
-			pw.append("<tr>");
-			pw.append("<th colspan=3>Contacts");
-			pw.append("</tr>");
-			pw.append("<tr>");
-			pw.append("<th>");
-			pw.append("<th>Name");
-			pw.append("<th>Contact");
-			pw.append("</tr>");
-			
-			for(ContactDTO dto : list) {
-				pw.append("<tr>");
-				pw.append("<td>"+dto.getSeq());
-				pw.append("<td>"+dto.getName());
-				pw.append("<td>"+dto.getContact());
-				pw.append("</tr>");
-			}
-			
-			// delete
-			pw.append("<tr>");
-			pw.append("<td colspan=3>");
-			pw.append("<form action='DeleteProc'> ");
-			pw.append("<input type=text name=delID placeholder='Input target id to delete'>");
-			pw.append("<button>Delete</button>");
-			pw.append("</form>");
-			pw.append("</tr>");
-			// modify
-			pw.append("<tr>");
-			pw.append("<td colspan=3>");
-			pw.append("<form action='ModifyProc'>");
-			pw.append("<input type=text name=modifyName placeholder='Input name to change'><br>");
-			pw.append("<input type=text name=modifyContact placeholder='Input contact to change'><br>");
-			pw.append("<input type=text name=modifyId placeholder='Input target seq to modify'>");
-			pw.append("<button>Modify</button>");
-			pw.append("</form>");
-			pw.append("</tr>");
-			
-			
-			pw.append("<tr>");
-			pw.append("<th colspan=3 align=center><a href='index.html'>Back</a>");
-			pw.append("</body>");
-			pw.append("</html>");
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("outputView.jsp").forward(request, response);
 			
 			
 		}catch(Exception e) {
