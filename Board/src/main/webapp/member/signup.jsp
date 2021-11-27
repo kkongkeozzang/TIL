@@ -9,6 +9,19 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	$(function(){
+		// 아이디 입력 검사
+		$("#id-check").on("click",function(){
+			if($("#input-id").val()==""){
+				alert("아이디를 입력해주세요.");
+				return;
+			}
+			
+			window.open("/idCheck.mem?id="+$("#input-id").val(),"","width=300px,height=200px,top=200px,left=200px");
+		})
+	})
+</script>
 <style>
 	.a {
 		text-align: right;
