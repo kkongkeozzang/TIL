@@ -79,10 +79,8 @@
                         ifFlag = false;
                     }
                 }
-                let idCheckEvent = $("#input-id").on("input",idCheck);
-                $("#input-id").on("focus",function(){
-                    idCheckEvent;
-                })
+                $("#input-id").on("input",idCheck);
+                $("#input-id").on("focus",idCheck);
                 $("#input-id").on("blur",function(){
                     $("#id-result").html(""); 
                     $("#id-result").css("padding-bottom","0px");
@@ -99,7 +97,7 @@
                     <input class="align-self-center" type="password" id="input-rpw">
                 </div>
                 <div class="a col-3 align-self-center" style="padding:0"></div>
-                <div class="col-9 d-flex" id="check" style="padding-top:0;padding-bottom:0;">
+                <div class="col-9 " id="check" style="padding-top:0;padding-bottom:0;">
                     <div class="align-self-center" id="match"></div>
                 </div>
             </div>
@@ -132,6 +130,7 @@
                 })
                 $("#input-rpw").on("blur",function(){
                     $("#match").html(""); 
+                    $("#match").css("padding-bottom","0px");
                 })
             </script>
             <!-- 이름 -->
@@ -161,8 +160,8 @@
                             nameFlag =false;
                         }
                     }
-                    let nameCheckEvent = $("#input-name").on("input",nameCheck);
-                    $("#input-name").on("focus",nameCheckEvent);
+                    $("#input-name").on("input",nameCheck);
+                    $("#input-name").on("focus",nameCheck);
                     $("#input-name").on("blur",function(){
                         $("#name-result").html(""); 
                         $("#name-result").css("padding-bottom","0px");
@@ -209,14 +208,14 @@
                         phoneFlag = true;
                     }
                 }
-                let phoneCheckEvent2 = $("#phone2").on("input",phoneCheck);
-                $("#phone2").on("focus",phoneCheckEvent2);
+                $("#phone2").on("input",phoneCheck);
+                $("#phone2").on("focus",phoneCheck);
                 $("#phone2").on("blur",function(){
                     $("#phone-result").html(""); 
                     $("#phone-result").css("padding-bottom","0px");
                 })
-                let phoneCheckEvent3 = $("#phone3").on("input",phoneCheck);
-                $("#phone3").on("focus",phoneCheckEvent3);
+                $("#phone3").on("input",phoneCheck);
+                $("#phone3").on("focus",phoneCheck);
                 $("#phone3").on("blur",function(){
                     $("#phone-result").html(""); 
                     $("#phone-result").css("padding-bottom","0px");
@@ -250,8 +249,8 @@
                         emailFlag=false;
                     }
                 }
-                let emailCheckEvent = $("#input-email").on("input",emailCheck);
-                $("#input-email").on("focus",emailCheckEvent);
+                $("#input-email").on("input",emailCheck);
+                $("#input-email").on("focus",emailCheck);
                 $("#input-email").on("blur",function(){
                     $("#email-result").html(""); 
                     $("#email-result").css("padding-bottom","0px");
