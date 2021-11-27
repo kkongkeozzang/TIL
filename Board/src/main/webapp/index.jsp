@@ -24,7 +24,7 @@
 			</tr>
 			<tr>
 				<td colspan=2 align=center><button>로그인</button> 
-				<a><button>회원가입</button></a>
+				<a href="signup.mem"><button type=button>회원가입</button></a>
 			</tr>
 		</table>
 	</form>
