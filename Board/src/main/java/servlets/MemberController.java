@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.MemberDAO;
 import dto.MemberDTO;
@@ -58,8 +59,14 @@ public class MemberController extends HttpServlet {
 				String pw = utils.SHA512.getSHA512(request.getParameter("pw"));
 				
 				boolean result = dao.isLoginAllowed(id,pw);
-				System.out.println(result);
-				
+				// 로그인 증명 발급
+				// 로그인에 성공했을 경우
+				if(result) {
+					HttpSession session = request.getSession();
+					session.setAttribute("loginID", id);
+					System.out.println("로그인에 성공했습니다.");
+				}
+				response.sendRedirect("/index.jsp");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
