@@ -57,7 +57,7 @@
 </head>
 
 <body>
-<form action="idCheck.mem" method="get">
+<form action="signupProc.mem" method="post">
         <div class="container">
         	<!-- title -->
             <div class="row ">
@@ -314,7 +314,7 @@
                             document.getElementById("address1").value = addr;
                             // 커서를 상세주소 필드로 이동한다.
                             document.getElementById("address2").focus();
-                            emailFlag=true;
+                            addressFlag=true;
                         }
                     }).open();
                 }
@@ -329,16 +329,12 @@
 			<!-- 회원가입 유효성 검사 -->
             <script>
             	<%-- 하나라도 입력되지 않은 게 있으면 페이지 넘김 막기--%>
-	            let checkAll = function(){
-	                if(!(idFlag&&pwFlag&&nameFlag&&phoneFlag&&emailFlag&&addressFlag)){
-	                    return false;
-	                }
-	                return true;
-	            }
+	            
                 $("#signup").on("click",function(){
-                    if(!checkAll()){
-                        alert("회원 가입 정보를 입력해주세요.");
-                        return false;
+		            let isAllFillIn = idFlag&&pwFlag&&nameFlag&&phoneFlag&&emailFlag&&addressFlag;
+                    if(!isAllFillIn){
+	                    alert("회원 가입 정보를 입력해주세요.");
+	                    return false;
                     }
                 })
             </script>
