@@ -22,13 +22,19 @@
 					<td><button>To Board</button>
 					<td><button>MyPage</button>
 					<td><button id="logout">logout</button>
-					<td><button>Leave</button>
+					<td><button id="leave">Leave</button>
 				</tr>
 			</table>
 			<script>
 				$("#logout").on("click",function(){
 					if(confirm("정말 로그아웃하시겠습니까?")){
 						location.href="/logout.mem";
+					}
+				})
+				$("#leave").on("click",function(){
+					if(confirm("정말 회원탈퇴 하시겠습니까?")){
+						<%-- 자스에서 페이지 위치 바꾸는 방법 --%> 
+						location.href="/leave.mem";
 					}
 				})
 			</script>

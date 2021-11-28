@@ -71,6 +71,14 @@ public class MemberController extends HttpServlet {
 			}else if(cmd.equals("/logout.mem")) {
 				request.getSession().removeAttribute("loginID");
 				response.sendRedirect("/index.jsp");
+			// 회원탈퇴 기능
+			}else if(cmd.equals("/leave.mem")) {
+				// DB에서 삭제
+				int result = dao.delete((String)request.getSession().getAttribute("loginID"));
+				// 세션에서 삭제
+				request.getSession().invalidate();
+				// 메인페이지로 복귀 
+				response.sendRedirect("/index.jsp");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

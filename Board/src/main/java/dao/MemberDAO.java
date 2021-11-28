@@ -80,4 +80,16 @@ public class MemberDAO {
 		}
 	}
 	
+	public int delete(String id) throws Exception {
+		String sql = "DELETE FROM member WHERE id=?";
+		try (Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, id);			
+			con.commit();	
+			int result = pstat.executeUpdate();
+			return result;
+		}
+	}
+	
 }
