@@ -9,8 +9,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+
 	<c:choose>
-		<%-- 세션에 담은 값도 el로 쓸수 있음 --%>
+		<%-- 세션에 담은 값도 el로 쓸수 있음--%>
 		<c:when test="${loginID != null}">
 
 			<table border=1 align=center>
@@ -20,12 +21,20 @@
 				<tr>
 					<td><button>To Board</button>
 					<td><button>MyPage</button>
-					<td><button>logout</button>
+					<td><button id="logout">logout</button>
 					<td><button>Leave</button>
 				</tr>
 			</table>
-
+			<script>
+				$("#logout").on("click",function(){
+					if(confirm("정말 로그아웃하시겠습니까?")){
+						location.href="/logout.mem";
+					}
+				})
+			</script>
 		</c:when>
+
+		 
 		<c:otherwise>
 			<form action="login.mem" method="post">
 				<table border=1 align=center>
@@ -38,7 +47,7 @@
 					</tr>
 					<tr>
 						<td>비밀번호 :
-						<td><input type=text name="pw">
+						<td><input type=password name="pw">
 					</tr>
 					<tr>
 						<td colspan=2 align=center><button>로그인</button> <a
@@ -48,5 +57,6 @@
 			</form>
 		</c:otherwise>
 	</c:choose>
+ 
 </body>
 </html>

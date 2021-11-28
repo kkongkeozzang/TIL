@@ -67,6 +67,10 @@ public class MemberController extends HttpServlet {
 					System.out.println("로그인에 성공했습니다.");
 				}
 				response.sendRedirect("/index.jsp");
+			// 로그아웃 기능	
+			}else if(cmd.equals("/logout.mem")) {
+				request.getSession().removeAttribute("loginID");
+				response.sendRedirect("/index.jsp");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
