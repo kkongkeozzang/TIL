@@ -3,12 +3,12 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import dto.MemberDTO;
 
 
 public class MemberDAO {
@@ -47,6 +47,23 @@ public class MemberDAO {
 		}
 	}
 	
-	
+	public int insert(MemberDTO dto) throws Exception {
+		String sql = "INSERT INTO member VALUES(?,?,?,?,?,?,?,?,DEFAULT)";
+		try (Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, dto.getId());			
+			pstat.setString(2, dto.getPw());			
+			pstat.setString(3, dto.getName());
+			pstat.setString(4, dto.getPhone());
+			pstat.setString(5, dto.getEmail());
+			pstat.setString(6, dto.getZipcode());
+			pstat.setString(7, dto.getAddress1());
+			pstat.setString(8, dto.getAddress2());
+			con.commit();	
+			int result = pstat.executeUpdate();
+			return result;
+		}
+	}
 	
 }

@@ -57,7 +57,7 @@
 </head>
 
 <body>
-<form action="signupProc.mem" method="post">
+<form action="/signupProc.mem" method="post">
         <div class="container">
         	<!-- title -->
             <div class="row ">
@@ -67,7 +67,7 @@
             <div class="row">
                 <div class="a col-3 align-self-center" >아이디 :</div>
                 <div class="col-9 align-self-center">
-                    <input class="align-self-center" type="text" id="input-id">
+                    <input class="align-self-center" type="text" id="input-id" name="id">
                     <button class="align-self-center" id="id-check" type="button" >중복확인</button>
                 </div>
                 <div class="a col-3 align-self-center" style="padding:0"></div>
@@ -103,7 +103,7 @@
             <div class="row">
                 <div class="a col-3 align-self-center">패스워드 :</div>
                 <div class="col-9 align-self-center">
-                    <input class="align-self-center" type="password" id="input-pw">
+                    <input class="align-self-center" type="password" id="input-pw" name="pw">
                 </div>
                 <div class="a col-3 align-self-center">패스워드 확인 :</div>
                 <div class="col-9 d-flex" id="check">
@@ -150,7 +150,7 @@
             <div class="row">
                 <div class="a col-3 align-self-center">이름 :</div>
                 <div class="col-9 align-self-center">
-                    <input class="align-self-center" type="text" id="input-name">
+                    <input class="align-self-center" type="text" id="input-name" name="name">
                 </div>
                 <div class="a col-3 align-self-center" style="padding:0"></div>
                 <div class="col-9 d-flex" id="check" style="padding-top:0;padding-bottom:0;">
@@ -186,13 +186,13 @@
             <div class="row">
                 <div class="a col-3 align-self-center">전화번호 :</div>
                 <div class="col-9 align-self-center">
-                    <select id="phone">
+                    <select id="phone" name="phone">
                         <option>010</option>
                         <option>011</option>
                     </select>
                     -
-                    <input class="align-self-center" type="text" id="phone2">-
-                    <input class="align-self-center" type="text" id="phone3">
+                    <input class="align-self-center" type="text" id="phone2" name="phone2">-
+                    <input class="align-self-center" type="text" id="phone3" name="phone3">
                 </div>
                 <div class="a col-3 align-self-center" style="padding:0"></div>
                 <div class="col-9" id="check" style="padding-top:0;padding-bottom:0;">
@@ -238,7 +238,7 @@
             <div class="row">
                 <div class="a col-3 align-self-center">이메일 :</div>
                 <div class="col-9 align-self-center">
-                    <input type="text" id="input-email">
+                    <input type="text" id="input-email" name="email">
                 </div>
                 <div class="a col-3 align-self-center" style="padding:0"></div>
                 <div class="col-9 d-flex" id="check" style="padding-top:0;padding-bottom:0;">
@@ -273,20 +273,20 @@
             <div class="row">
                 <div class="a col-3 align-self-center">우편번호 :</div>
                 <div class="col-9 align-self-center">
-                    <input class="align-self-center" type="text" id="zipCode">
+                    <input class="align-self-center" type="text" id="zipCode" name="zipCode">
                     <button type="button" class="align-self-center" onclick="sample6_execDaumPostcode()">찾기</button>
                 </div>
             </div>
             <div class="row">
                 <div class="a col-3 align-self-center">주소1 :</div>
                 <div class="col-9 align-self-center">
-                    <input class="align-self-center" type="text" class="add" id="address1">
+                    <input class="align-self-center" type="text" class="add" id="address1" name="address1">
                 </div>
             </div>
             <div class="row">
                 <div class="a col-3 align-self-center">주소2 :</div>
                 <div class="col-9 align-self-center">
-                    <input class="align-self-center" type="text" class="add" id="address2">
+                    <input class="align-self-center" type="text" class="add" id="address2" name="address2">
                 </div>
             </div>
     		<!-- 다음 API 사용 -->
@@ -331,7 +331,7 @@
             	<%-- 하나라도 입력되지 않은 게 있으면 페이지 넘김 막기--%>
 	            
                 $("#signup").on("click",function(){
-		            let isAllFillIn = idFlag&&pwFlag&&nameFlag&&phoneFlag&&emailFlag&&addressFlag;
+                	let isAllFillIn = idFlag&&pwFlag&&nameFlag&&phoneFlag&&emailFlag&&addressFlag;
                     if(!isAllFillIn){
 	                    alert("회원 가입 정보를 입력해주세요.");
 	                    return false;

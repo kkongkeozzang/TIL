@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,11 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.MemberDAO;
+import dto.MemberDTO;
 
 @WebServlet("*.mem")
 public class MemberController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		request.setCharacterEncoding("utf8");  // get방식 한글 깨짐 방지
+		
 		MemberDAO dao = MemberDAO.getInstance();
 
 		String uri = request.getRequestURI();
@@ -26,11 +30,28 @@ public class MemberController extends HttpServlet {
 			// 회원가입 페이지로 이동
 			if(cmd.equals("/signup.mem")) {
 				response.sendRedirect("/member/signup.jsp");
+			// id 중복체크 기능
 			}else if(cmd.equals("/idCheck.mem")) {
 				String id = request.getParameter("id");
 				boolean result = dao.isIdExist(id);
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("/member/idCheckView.jsp").forward(request, response);
+			// 회원가입 기능	
+			}else if(cmd.equals("/signupProc.mem")) {
+				String id = request.getParameter("id");
+				String pw = utils.SHA512.getSHA512(request.getParameter("pw"));
+				String name = request.getParameter("name");
+				String phone = request.getParameter("phone");
+				String phone2 = request.getParameter("phone2");
+				String phone3 = request.getParameter("phone3");
+				String phoneSum = phone+phone2+phone3;
+				String email = request.getParameter("email");
+				String zipCode = request.getParameter("zipCode");
+				String address1 = request.getParameter("address1");
+				String address2 = request.getParameter("address2");
+				
+				int result = dao.insert(new MemberDTO(id,pw,name,phoneSum,email,zipCode,address1,address2,null));
+				response.sendRedirect("index.jsp");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
