@@ -66,4 +66,18 @@ public class MemberDAO {
 		}
 	}
 	
+	public boolean isLoginAllowed(String id, String pw) throws Exception {
+		String sql = "SELECT * FROM member WHERE id=? AND pw=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, id);
+			pstat.setString(2, pw);
+			try(ResultSet rs = pstat.executeQuery();){				
+				return rs.next();
+			}
+			
+		}
+	}
+	
 }

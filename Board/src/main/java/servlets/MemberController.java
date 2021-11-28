@@ -52,6 +52,14 @@ public class MemberController extends HttpServlet {
 				
 				int result = dao.insert(new MemberDTO(id,pw,name,phoneSum,email,zipCode,address1,address2,null));
 				response.sendRedirect("index.jsp");
+			// 로그인 기능
+			}else if(cmd.equals("/login.mem")) {
+				String id = request.getParameter("id");
+				String pw = utils.SHA512.getSHA512(request.getParameter("pw"));
+				
+				boolean result = dao.isLoginAllowed(id,pw);
+				System.out.println(result);
+				
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

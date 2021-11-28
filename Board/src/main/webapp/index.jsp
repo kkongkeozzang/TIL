@@ -9,7 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<form >
+	<form action="login.mem" method="post">
 		<table border=1 align=center>
 			<tr>
 				<td colspan=2 align=center>회원 로그인
