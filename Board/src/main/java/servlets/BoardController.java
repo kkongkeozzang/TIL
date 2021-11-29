@@ -44,6 +44,18 @@ public class BoardController extends HttpServlet {
 				int result = dao.insert(new BoardDTO(0,writer,title,contents,null,0));
 				System.out.println(result);
 				response.sendRedirect("/toBoard.board");
+			}else if(cmd.equals("/detail.board")) {
+				int seq = Integer.parseInt(request.getParameter("seq"));
+				BoardDTO dto = dao.selectBySeq(seq);
+				// 조회수 올리기
+				int result = dao.addViewCount(seq);
+				request.setAttribute("dto", dto);
+				request.getRequestDispatcher("/board/detail.jsp").forward(request, response);
+			}else if(cmd.equals("/delete.board")) {
+				int seq = Integer.parseInt(request.getParameter("seq"));
+				int result = dao.delete(seq);
+				System.out.println(result);
+				response.sendRedirect("/toBoard.board");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

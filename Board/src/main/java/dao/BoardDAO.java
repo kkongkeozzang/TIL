@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,5 +73,47 @@ public class BoardDAO {
 
 		}
 	}
+	
+	public BoardDTO selectBySeq(int seq) throws Exception {
+		String sql = "SELECT * FROM board WHERE SEQ = ?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, seq);
+			try(ResultSet rs = pstat.executeQuery();){
+				if(rs.next()) {
+					String writer = rs.getString("writer");
+					String title= rs.getString("title");
+					String contents = rs.getString("contents");
+					Date write_date = rs.getDate("write_date");
+					int view_count = rs.getInt("view_count");
+					BoardDTO dto= new BoardDTO(seq, writer, title, contents, write_date, view_count);
+					return dto;
+				}
+				return null;
+			}
+		}
+	}
+	public int addViewCount(int seq) throws Exception{
+		String sql = "UPDATE board SET view_count = view_count + 1 WHERE seq =?";
+		try (Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setInt(1, seq);			
+			int result = pstat.executeUpdate();
+			con.commit();	
+			return result;
+		}
+	}
 
+	public int delete(int id) throws Exception {
+		String sql = "DELETE FROM board WHERE seq=?";
+		try (Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setInt(1, id);			
+			con.commit();	
+			int result = pstat.executeUpdate();
+			return result;
+		}
+	}
 }
