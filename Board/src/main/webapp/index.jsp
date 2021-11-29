@@ -19,7 +19,7 @@
 					<th colspan=4>${loginID }님안녕하세요.
 				</tr>
 				<tr>
-					<td><button>To Board</button>
+					<td><button id="toBoard">To Board</button>
 					<td><button id="myPage">MyPage</button>
 					<td><button id="logout">logout</button>
 					<td><button id="leave">Leave</button>
@@ -39,6 +39,9 @@
 				})
 				$("#myPage").on("click",function(){
 					location.href="/myPage.mem";
+				})
+				$("#toBoard").on("click",function(){
+					location.href="/toBoard.board";
 				})
 			</script>
 		</c:when>
