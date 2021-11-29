@@ -79,6 +79,24 @@ public class MemberController extends HttpServlet {
 				request.getSession().invalidate();
 				// 메인페이지로 복귀 
 				response.sendRedirect("/index.jsp");
+			// 마이페이지 이동 기능
+			}else if(cmd.equals("/myPage.mem")){
+				MemberDTO dto = dao.selectById((String)(request.getSession().getAttribute("loginID")));
+				request.setAttribute("dto", dto);
+				request.getRequestDispatcher("/member/myPage.jsp").forward(request, response);
+			// 수정 기능
+			}else if(cmd.equals("/update.mem")) {
+				System.out.println("수정완료");
+				String id = (String)(request.getSession().getAttribute("loginID"));
+				String name = request.getParameter("name");
+				String email = request.getParameter("email");
+				String phone = request.getParameter("phone");
+				String zipCode = request.getParameter("zipCode");
+				String address1 = request.getParameter("address1");
+				String address2 = request.getParameter("address2");
+
+				int result = dao.modify(new MemberDTO(id,null,name,phone,email,zipCode,address1,address2,null));
+				response.sendRedirect("/index.jsp");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

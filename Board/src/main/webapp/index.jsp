@@ -20,7 +20,7 @@
 				</tr>
 				<tr>
 					<td><button>To Board</button>
-					<td><button>MyPage</button>
+					<td><button id="myPage">MyPage</button>
 					<td><button id="logout">logout</button>
 					<td><button id="leave">Leave</button>
 				</tr>
@@ -36,6 +36,9 @@
 						<%-- 자스에서 페이지 위치 바꾸는 방법 --%> 
 						location.href="/leave.mem";
 					}
+				})
+				$("#myPage").on("click",function(){
+					location.href="/myPage.mem";
 				})
 			</script>
 		</c:when>

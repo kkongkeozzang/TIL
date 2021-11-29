@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -91,5 +92,56 @@ public class MemberDAO {
 			return result;
 		}
 	}
+	
+	public MemberDTO selectById(String id) throws Exception {
+		String sql = "SELECT * FROM member WHERE id=?";
+		
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, id);
+			try(ResultSet rs = pstat.executeQuery();){
+				if(rs.next()) {
+					String pw = rs.getString("pw");
+					String name = rs.getString("name");
+					String phone = rs.getString("phone");
+					String email = rs.getString("email");
+					String zipcode = rs.getString("zipcode");
+					String address1 = rs.getString("address1");
+					String address2 = rs.getString("address2");
+					Date signup_date = rs.getDate("signup_date");
+		
+					MemberDTO dto = new MemberDTO(id,pw,name,phone,email,zipcode,address1,address2,signup_date);
+					return dto;
+				}
+				return null;
+			}
+		}
+	}
+	// 비밀번호 외 나머지 정보 수정 기능
+	public int modify(MemberDTO dto) throws Exception {
+			
+			String sql = "UPDATE member SET name=?, phone=?, email=?, zipcode=?, address1=?, address2=? WHERE id=?";
+			
+			try(Connection con = this.getConnection();
+					PreparedStatement pstat = con.prepareStatement(sql);){
+				pstat.setString(1, dto.getName());
+				pstat.setString(2, dto.getPhone());
+				pstat.setString(3, dto.getEmail());
+				pstat.setString(4, dto.getZipcode());
+				pstat.setString(5, dto.getAddress1());
+				pstat.setString(6, dto.getAddress2());
+				pstat.setString(7, dto.getId());
+				int result = pstat.executeUpdate();
+				con.commit();
+				System.out.println(result);
+				return result;
+		}
+	}
+	
+	
+	
+	
+	
 	
 }
