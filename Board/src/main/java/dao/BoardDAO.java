@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -64,7 +63,7 @@ public class BoardDAO {
 				String writer = rs.getString("writer");
 				String title= rs.getString("title");
 				String contents = rs.getString("contents");
-				Date write_date = rs.getDate("write_date");
+				Timestamp write_date = rs.getTimestamp("write_date");
 				int view_count = rs.getInt("view_count");
 				BoardDTO dto= new BoardDTO(seq, writer, title, contents, write_date, view_count);
 				list.add(dto);
@@ -84,7 +83,7 @@ public class BoardDAO {
 					String writer = rs.getString("writer");
 					String title= rs.getString("title");
 					String contents = rs.getString("contents");
-					Date write_date = rs.getDate("write_date");
+					Timestamp write_date = rs.getTimestamp("write_date");
 					int view_count = rs.getInt("view_count");
 					BoardDTO dto= new BoardDTO(seq, writer, title, contents, write_date, view_count);
 					return dto;
