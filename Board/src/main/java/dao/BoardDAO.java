@@ -74,6 +74,32 @@ public class BoardDAO {
 		}
 	}
 	
+	// 페이징 처리되는 글 범위 가져오기
+	public List<BoardDTO> selectByBound(int start, int end) throws Exception{
+		String sql = "SELECT * FROM (SELECT board.*, row_number() OVER(ORDER BY seq DESC) rn FROM board) WHERE rn BETWEEN ? AND ?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setInt(1, start);
+			pstat.setInt(2, end);
+			try(ResultSet rs = pstat.executeQuery();){
+				List<BoardDTO> list = new ArrayList<>();
+				while(rs.next()) {
+					int seq = rs.getInt("seq");
+					String writer = rs.getString("writer");
+					String title= rs.getString("title");
+					String contents = rs.getString("contents");
+					Timestamp write_date = rs.getTimestamp("write_date");
+					int view_count = rs.getInt("view_count");
+					BoardDTO dto= new BoardDTO(seq, writer, title, contents, write_date, view_count);
+					list.add(dto);
+				}
+				return list;
+			}
+	
+		}
+	}
+
 	public BoardDTO selectBySeq(int seq) throws Exception {
 		String sql = "SELECT * FROM board WHERE SEQ = ?";
 		try(Connection con = this.getConnection();
