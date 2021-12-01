@@ -38,14 +38,16 @@
 					id="back">
 					<%-- 작성자와 로그인ID가 같다면 삭제버튼 활성화 --%>
 					<c:if test="${dto.writer==loginID }">
-						<a href="/delete.board?seq=${dto.seq }"><button type=button id="delete">삭제하기</button></a>
+						<button type=button id="delete">삭제하기</button>
 					</c:if>
 					<script>
 	                	$("#back").on("click",function(){
 	                		location.href="/toBoard.board";
 	                	})
 	                	$("#delete").on("click",function(){
-	                		confirm("정말 삭제하시겠습니까?");
+	                		if(confirm("정말 삭제하시겠습니까?")){
+	                			location.href="/delete.board?seq=${dto.seq }";
+	                		}
 	                	})
 	                </script></td>
 			</tr>
