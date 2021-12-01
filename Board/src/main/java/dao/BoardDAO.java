@@ -186,10 +186,6 @@ public class BoardDAO {
 			endNavi = pageTotalCount;
 		}
 
-		System.out.println("currentPage : " +currentPage);
-		System.out.println("startNavi : " +startNavi);
-		System.out.println("endNavi : " +endNavi);
-
 		// 이전으로가기/이후로가기 화살표가 필요한지?
 		boolean needPrev = true;
 		boolean needNext = true;
@@ -207,7 +203,6 @@ public class BoardDAO {
 			pageNavi += "<a href='/toBoard.board?cpage="+i+"'>"+ i +"</a>"+" ";
 		}
 		if(needNext) {pageNavi += "<a href='/toBoard.board?cpage="+(endNavi+1)+"'>></a>";}
-		System.out.println(pageNavi);
 		return pageNavi; 
 	}
 

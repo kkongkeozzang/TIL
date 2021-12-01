@@ -30,7 +30,7 @@
 		<tr>
 		</c:forEach>
 		<tr align="center">
-			<td colspan="5">1 2 3 4 5 6 7 8 9 10</td>
+			<td colspan="5">${navi }
 		</tr>
 		<tr id="table-board">
 			<td colspan="5" align="right"><input type="button" value="작성하기"

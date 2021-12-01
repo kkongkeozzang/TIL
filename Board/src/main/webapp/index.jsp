@@ -41,7 +41,7 @@
 					location.href="/myPage.mem";
 				})
 				$("#toBoard").on("click",function(){
-					location.href="/toBoard.board";
+					location.href="/toBoard.board?cpage=1";
 				})
 			</script>
 		</c:when>

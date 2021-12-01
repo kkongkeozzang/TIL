@@ -39,7 +39,10 @@ public class BoardController extends HttpServlet {
 		try {
 			// 게시판 목록으로 이동
 			if(cmd.equals("/toBoard.board")) {
+				int currentPage = Integer.parseInt(request.getParameter("cpage"));
+				String navi = dao.getPageNavi(currentPage);
 				List<BoardDTO> list = dao.selectAll();
+				request.setAttribute("navi", navi);
 				request.setAttribute("list", list);
 				request.getRequestDispatcher("/board/list.jsp").forward(request, response);
 			// 글 작성하기 페이지로 이동
