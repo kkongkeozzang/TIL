@@ -142,4 +142,73 @@ public class BoardDAO {
 			con.commit();
 		}
 	}
+	
+	private int getRecordCount() throws Exception {
+		String sql = "SELECT COUNT(*) FROM board";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();){
+			rs.next();
+			return rs.getInt(1);
+		}
+	}
+	
+	// Page Navigator
+	public String getPageNavi(int currentPage) throws Exception{
+
+		// 총 몇 개의 레코드(게시글)을 가지고 있는지
+		int recordTotalCount = this.getRecordCount();
+		// 한 페이지에 몇개의 게시글을 보여줄 것인지
+		int recordCountPerPage = 10;
+		// 한 페이지에 네비게이터는 몇 개를 보여줄 것인지
+		int naviCountPerPage = 10;
+		// 총 몇 개의 페이지가 나오는지 계산할 수 있다.
+		int pageTotalCount = 0;
+		if(recordTotalCount % recordCountPerPage == 0) {
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}else {
+			pageTotalCount = recordTotalCount / recordCountPerPage + 1;
+		}
+
+
+		// 보안작업 (currentPage 인자값을 클라이언트가 조작했을 시 방어하기 위한 코드.)
+		if(currentPage < 1) {
+			currentPage = 1;
+		}else if(currentPage > pageTotalCount){
+			currentPage = pageTotalCount;
+		} 
+
+		int startNavi = (currentPage-1)/naviCountPerPage * naviCountPerPage +1;
+		int endNavi = startNavi+(naviCountPerPage-1);
+
+		// 공식에 의해 발생한 endNavi 값이 실제 페이지 전체 개수보다 클 경우
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+
+		System.out.println("currentPage : " +currentPage);
+		System.out.println("startNavi : " +startNavi);
+		System.out.println("endNavi : " +endNavi);
+
+		// 이전으로가기/이후로가기 화살표가 필요한지?
+		boolean needPrev = true;
+		boolean needNext = true;
+
+		if(startNavi ==1) {
+			needPrev = false;
+		}
+
+		if(endNavi == pageTotalCount) {needNext = false;}
+
+		// navi 만들기
+		String pageNavi ="";
+		if(needPrev) {pageNavi += "<a href='/toBoard.board?cpage="+(startNavi-1)+"'><</a>"+" ";}
+		for (int i=startNavi;i<=endNavi;i++) {
+			pageNavi += "<a href='/toBoard.board?cpage="+i+"'>"+ i +"</a>"+" ";
+		}
+		if(needNext) {pageNavi += "<a href='/toBoard.board?cpage="+(endNavi+1)+"'>></a>";}
+		System.out.println(pageNavi);
+		return pageNavi; 
+	}
+
 }
