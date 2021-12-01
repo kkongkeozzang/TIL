@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +128,18 @@ public class BoardDAO {
 			con.commit();	
 			int result = pstat.executeUpdate();
 			return result;
+		}
+	}
+	
+	// 대량데이터 삽입 (stat인 것에 주의)
+	public void insertDummy() throws Exception {
+		try (Connection con = this.getConnection();
+				Statement stat = con.createStatement();
+				){
+			for(int i=1;i< 147; i++) {
+				stat.executeUpdate("INSERT INTO board VALUES(board_seq.nextval, 'writer"+i+"','title"+i+"','내용',SYSDATE,DEFAULT)");
+			}
+			con.commit();
 		}
 	}
 }

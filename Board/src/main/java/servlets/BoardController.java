@@ -20,6 +20,15 @@ public class BoardController extends HttpServlet {
 		
 		BoardDAO dao = BoardDAO.getInstance();
 
+//		대량 	데이터 저장용 1회성 코드
+//		try {
+//			dao.insertDummy();
+//		}catch(Exception e1) {
+//			e1.printStackTrace();
+//		}
+		
+		
+		
 		String uri = request.getRequestURI();
 		System.out.println("전체 주소 : " + uri);
 		String ctx = request.getContextPath();
