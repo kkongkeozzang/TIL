@@ -180,6 +180,19 @@ public class BoardDAO {
 		}
 	}
 	
+	public int getPageTotalCount() throws Exception {
+		int recordTotalCount = this.getRecordCount();
+		
+		// 총 몇 개의 페이지가 나오는지 계산할 수 있다.
+		int pageTotalCount = 0;
+		if(recordTotalCount % Statics.RECORD_COUNT_PER_PAGE == 0) {
+			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE;
+		}else {
+			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE + 1;
+		}
+		return pageTotalCount;
+	}
+	
 	// Page Navigator
 	public String getPageNavi(int currentPage) throws Exception{
 
@@ -193,14 +206,6 @@ public class BoardDAO {
 		}else {
 			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE + 1;
 		}
-
-
-		// 보안작업 (currentPage 인자값을 클라이언트가 조작했을 시 방어하기 위한 코드.)
-		if(currentPage < 1) {
-			currentPage = 1;
-		}else if(currentPage > pageTotalCount){
-			currentPage = pageTotalCount;
-		} 
 
 		int startNavi = (currentPage-1)/Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE +1;
 		int endNavi = startNavi+(Statics.NAVI_COUNT_PER_PAGE-1);

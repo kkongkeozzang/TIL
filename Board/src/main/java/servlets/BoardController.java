@@ -41,6 +41,12 @@ public class BoardController extends HttpServlet {
 			// 게시판 목록으로 이동
 			if(cmd.equals("/toBoard.board")) {
 				int currentPage = Integer.parseInt(request.getParameter("cpage"));
+				
+				// 검증 코드 dao에서 빼내기
+				int pageTotalCount  = dao.getPageTotalCount();
+				if(currentPage <1) {currentPage=1;}
+				if(currentPage > pageTotalCount) {currentPage = pageTotalCount;}
+				
 				int start = currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
 				int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
 				String navi = dao.getPageNavi(currentPage);
