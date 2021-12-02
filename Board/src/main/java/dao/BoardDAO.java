@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import dto.BoardDTO;
+import statics.Statics;
 
 public class BoardDAO {
 	private static BoardDAO instance = null;
@@ -184,16 +185,13 @@ public class BoardDAO {
 
 		// 총 몇 개의 레코드(게시글)을 가지고 있는지
 		int recordTotalCount = this.getRecordCount();
-		// 한 페이지에 몇개의 게시글을 보여줄 것인지
-		int recordCountPerPage = 10;
-		// 한 페이지에 네비게이터는 몇 개를 보여줄 것인지
-		int naviCountPerPage = 10;
+
 		// 총 몇 개의 페이지가 나오는지 계산할 수 있다.
 		int pageTotalCount = 0;
-		if(recordTotalCount % recordCountPerPage == 0) {
-			pageTotalCount = recordTotalCount / recordCountPerPage;
+		if(recordTotalCount % Statics.RECORD_COUNT_PER_PAGE == 0) {
+			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE;
 		}else {
-			pageTotalCount = recordTotalCount / recordCountPerPage + 1;
+			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE + 1;
 		}
 
 
@@ -204,8 +202,8 @@ public class BoardDAO {
 			currentPage = pageTotalCount;
 		} 
 
-		int startNavi = (currentPage-1)/naviCountPerPage * naviCountPerPage +1;
-		int endNavi = startNavi+(naviCountPerPage-1);
+		int startNavi = (currentPage-1)/Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE +1;
+		int endNavi = startNavi+(Statics.NAVI_COUNT_PER_PAGE-1);
 
 		// 공식에 의해 발생한 endNavi 값이 실제 페이지 전체 개수보다 클 경우
 		if(endNavi > pageTotalCount) {

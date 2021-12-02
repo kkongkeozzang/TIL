@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.BoardDAO;
 import dto.BoardDTO;
+import statics.Statics;
 
 @WebServlet("*.board")
 public class BoardController extends HttpServlet {
@@ -40,8 +41,8 @@ public class BoardController extends HttpServlet {
 			// 게시판 목록으로 이동
 			if(cmd.equals("/toBoard.board")) {
 				int currentPage = Integer.parseInt(request.getParameter("cpage"));
-				int start = currentPage*10-9;
-				int end = currentPage*10;
+				int start = currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
+				int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
 				String navi = dao.getPageNavi(currentPage);
 				List<BoardDTO> list = dao.selectByBound(start, end);
 				request.setAttribute("navi", navi);
