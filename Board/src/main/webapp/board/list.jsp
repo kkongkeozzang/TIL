@@ -23,7 +23,7 @@
 		<c:forEach var="dto" items="${list }">
 		<tr id=list>
 			<td align=center>${dto.seq }
-			<td style="padding:5px;"><a href="detail.board?seq=${dto.seq }">${dto.title }</a>
+			<td style="padding:5px;"><a href="detail.board?cpage=${cpage}&seq=${dto.seq }">${dto.title }</a>
 			<td align=center>${dto.writer }
 			<td align=center>${dto.detailDate }
 			<td align=center>${dto.view_count }

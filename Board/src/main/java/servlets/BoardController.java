@@ -40,8 +40,12 @@ public class BoardController extends HttpServlet {
 		try {
 			// 게시판 목록으로 이동
 			if(cmd.equals("/toBoard.board")) {
-				int currentPage = Integer.parseInt(request.getParameter("cpage"));
 				
+				String cpage = request.getParameter("cpage");
+				request.setAttribute("cpage", cpage);
+				if(cpage == null) {cpage="1";}
+				
+				int currentPage = Integer.parseInt(cpage);
 				// 검증 코드 dao에서 빼내기
 				int pageTotalCount  = dao.getPageTotalCount();
 				if(currentPage <1) {currentPage=1;}
@@ -67,6 +71,8 @@ public class BoardController extends HttpServlet {
 				response.sendRedirect("/toBoard.board");
 			// 상세페이지 이동
 			}else if(cmd.equals("/detail.board")) {
+				String cpage = request.getParameter("cpage");
+				request.setAttribute("cpage", cpage);
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				BoardDTO dto = dao.selectBySeq(seq);
 				// 조회수 올리기
@@ -75,18 +81,20 @@ public class BoardController extends HttpServlet {
 				request.getRequestDispatcher("/board/detail.jsp").forward(request, response);
 			// 삭제하기 
 			}else if(cmd.equals("/delete.board")) {
+				String cpage = request.getParameter("cpage");
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				int result = dao.delete(seq);
 				System.out.println(result);
-				response.sendRedirect("/toBoard.board");
+				response.sendRedirect("/toBoard.board?cpage="+cpage);
 			// 수정하기
 			}else if(cmd.equals("/modify.board")) {
+				String cpage = request.getParameter("cpage");
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				String title = request.getParameter("title");
 				String contents = request.getParameter("contents");
 				
 				int result = dao.modify(seq, title, contents);
-				response.sendRedirect("/detail.board?seq="+seq);
+				response.sendRedirect("/detail.board?cpage="+cpage+"&seq="+seq);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

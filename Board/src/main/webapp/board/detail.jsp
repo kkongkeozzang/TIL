@@ -24,6 +24,7 @@
 			<tr>
 				<td width="500px" colspan="4">
 				<input type="hidden" value="${dto.seq }" name="seq">
+				<input type="hidden" value="${cpage}" name="cpage">
 				<input type="text" align="left"
 					placeholder="글 제목을 입력하세요" name="title" id="title" readonly value="${dto.title }"></td>
 
@@ -47,11 +48,11 @@
 					</c:if>
 					<script>
 	                	$("#back").on("click",function(){
-	                		location.href="/toBoard.board";
+	                		location.href="/toBoard.board?cpage="+${cpage};
 	                	})
 	                	$("#delete").on("click",function(){
 	                		if(confirm("정말 삭제하시겠습니까?")){
-	                			location.href="/delete.board?seq=${dto.seq }";
+	                			location.href="/delete.board?cpage=${cpage}&seq=${dto.seq }";
 	                		}
 	                	})
 	                	
