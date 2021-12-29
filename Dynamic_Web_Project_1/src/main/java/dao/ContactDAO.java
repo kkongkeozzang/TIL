@@ -1,25 +1,43 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
 import dto.ContactDTO;
 
 public class ContactDAO {
 	
+	private BasicDataSource bds = new BasicDataSource();
+	
+	private static ContactDAO instance = null;
+	public static ContactDAO getInstance() {
+		if(instance == null) {
+			instance = new ContactDAO();
+		}
+		return instance;
+	}
+	
+	private ContactDAO() {
+		bds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+		bds.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
+		bds.setUsername("kh");
+		bds.setPassword("kh");
+		bds.setInitialSize(30);
+	}
+	
 	private Connection getConnection() throws Exception {
-		String userName = "kh";
-		String password = "kh";
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection con = DriverManager.getConnection(url,userName,password);
-		return con;
+		Context ctx = new InitialContext();
+		DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/oracle");
+		return ds.getConnection();
 	}
 	
 	public int insert(String name, String contact) throws Exception {
