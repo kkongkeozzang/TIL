@@ -124,7 +124,7 @@ img{
 		<a href="/member/logout">로그아웃</a>
 		<a href="/member/leave">회원탈퇴</a>
 		<br>
-		<a href="/member/board">자유게시판</a>
+		<a href="/board/list">자유게시판</a>
 		<a href="/member/mypage">마이페이지</a>
 		</c:when>
 		<c:otherwise>

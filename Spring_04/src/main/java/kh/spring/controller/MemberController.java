@@ -30,7 +30,7 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("idDuplCheck")
+	@RequestMapping(value="idDuplCheck", produces="text/html;charset=utf8")
 	public String idDuplCheck(String id) throws Exception {
 		int result = dao.idDuplCheck(id);
 		System.out.println(result);
@@ -66,12 +66,6 @@ public class MemberController {
 		
 		int result = dao.delete((String)session.getAttribute("loginID"));
 		session.invalidate();
-		return "redirect:/";
-	}
-	
-	@RequestMapping("board")
-	public String board() throws Exception {
-		
 		return "redirect:/";
 	}
 	
