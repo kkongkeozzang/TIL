@@ -39,9 +39,9 @@
 		<tr>
 			<td colspan=3>
 			<form action="updateProc" method="post">
-			<input type=text name="seq" placeholder="Target seq to update"><br>
-			<input type=text name="name" placeholder="Target Name to update"><br>
-			<input type=text name="contact" placeholder="Target Contact to update">
+			<input type=text name="column" placeholder="Column Name to update"><br>
+			<input type=text name="value" placeholder="Value to update"><br>
+			<input type=text name="seq" placeholder="Target seq to update">
 			<button>Update</button>
 			</form>
 		</tr>

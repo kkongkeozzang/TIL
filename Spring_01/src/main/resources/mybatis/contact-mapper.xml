@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="Contact">
+ 	
+ 	<insert id="insert">
+ 		INSERT INTO contact VALUES(contact_seq.NEXTVAL, #{name}, #{contact})
+ 	</insert>
+ 	
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(*) FROM contact
+	</select>
+ 	
+	<select id="selectAll" resultType="kh.spring.dto.ContactDTO">
+		SELECT * FROM contact ORDER BY seq
+	</select>
+ 	
+	<delete id="deleteBySeq">
+		DELETE FROM contact WHERE seq = #{value}
+	</delete>
+ 	
+	<update id="update">
+		UPDATE contact SET ${column} = #{value} WHERE seq = #{seq}
+	</update>
+ 	
+	<select id="selectBySeq" resultType="kh.spring.dto.ContactDTO">
+		SELECT * FROM contact WHERE id = #{value}
+	</select>
+ 	
+ 	<select id="searchByMultiCon" resultType="kh.spring.dto.ContactDTO">
+ 		SELECT * FROM contact 
+ 		<trim prefix="where" prefixOverrides="and|or">
+	 		<if test="name!=''">
+	 			name=#{name}
+	 		</if>
+	 		<if test="contact!=''">
+	 			and contact=#{contact}
+	 		</if>
+ 		</trim>
+ 	</select>
+</mapper>

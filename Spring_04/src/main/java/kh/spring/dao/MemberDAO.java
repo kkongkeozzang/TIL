@@ -1,75 +1,44 @@
 package kh.spring.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.MemberDTO;
 
 @Repository
 public class MemberDAO {
-
+	
 	@Autowired
-	private JdbcTemplate jdbc;
-
-	public int insert(MemberDTO dto) throws Exception {
-		String sql = "INSERT INTO member VALUES(?,?,?,null,?,null,null,null,DEFAULT)";
-		return jdbc.update(sql,dto.getId(), dto.getPw(), dto.getName(), dto.getEmail());
+	private SqlSessionTemplate mybatis;
+	
+	public int insert(MemberDTO dto) {
+		return mybatis.insert("Member.insert",dto);
 	}
 	
-	public int modify(MemberDTO dto) throws Exception {
-		String sql = "UPDATE member SET name=?, email=? WHERE id=?";
-		return jdbc.update(sql,dto.getName(), dto.getEmail(),dto.getId());
+	public int modify(MemberDTO dto) {
+		return mybatis.update("Member.modify",dto);
 	}
 
-	public boolean isIdExist(String id) {
-		String sql = "SELECT id FROM member WHERE id=?";
-		try {
-			String result =  jdbc.queryForObject(sql, new RowMapper<String>() {
-				@Override
-				public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-					return rs.getString("id");
-				}
-			}, id); 
-		}catch(EmptyResultDataAccessException e) {
-			return false;
-		}
-		return true;
-	}
-	
 	public int idDuplCheck(String id) {
-		String sql = "SELECT count(*) FROM member WHERE id =?";
-		return jdbc.queryForObject(sql, Integer.class, id);
+		return mybatis.selectOne("Member.idDuplCheck",id);
 	}
 	
 	public int login(String id, String pw) {
-		String sql = "SELECT count(*) FROM member WHERE id =? AND pw = ?";
-		return jdbc.queryForObject(sql, Integer.class, id,pw);
+		Map<String,String> map = new HashMap<>();
+		map.put("id", id);
+		map.put("pw", pw);
+		return mybatis.selectOne("Member.login",map);
 	}
 	
 	public int delete(String id) {
-		String sql = "DELETE FROM member WHERE id =?";
-		return jdbc.update(sql, id);
+		return mybatis.delete("Member.delete",id);
 	}
 	
-	public MemberDTO selectById(String id) throws Exception {
-		String sql = "SELECT * FROM member WHERE id = ?";
-		return jdbc.queryForObject(sql, new RowMapper<MemberDTO>() {
-			@Override
-			public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-				MemberDTO dto = new MemberDTO();
-				dto.setId(rs.getString("id"));
-				dto.setName(rs.getString("name"));
-				dto.setEmail(rs.getString("email"));
-				dto.setSignup_date(rs.getDate("signup_date"));
-				return dto;
-			}
-		}, id);
+	public MemberDTO selectById(String id) {
+		return mybatis.selectOne("Member.searchById",id);
 	}
-	
 }

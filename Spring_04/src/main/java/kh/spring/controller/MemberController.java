@@ -17,6 +17,8 @@ import kh.spring.dto.MemberDTO;
 @RequestMapping("/member/")
 public class MemberController {
 	
+	
+	
 	@Autowired
 	private MemberDAO dao;
 	

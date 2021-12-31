@@ -19,6 +19,7 @@
 		<tr>
 			<th><a href="toInput">toInput</a>
 			<th><a href="toOutput">toOutput</a>
+			<th><a href="toSearch">toSearch</a>
 		</tr>
 	</table>
 </body>

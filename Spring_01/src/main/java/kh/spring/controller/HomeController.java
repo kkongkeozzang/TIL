@@ -65,6 +65,21 @@ public class HomeController {
 		return "output";
 	}
 	
+	@RequestMapping("toSearch")
+	public String toSearch() {
+		return "search";
+	}
+	
+	@RequestMapping("searchByMultiCon")
+	public String multiSearch(ContactDTO dto) {
+		List<ContactDTO> list = dao.searchByMultiCon(dto);
+		
+		for(ContactDTO dtos : list) {
+			System.out.println(dtos.getSeq() +":"+ dtos.getName() +":"+ dtos.getContact());
+		}
+		return "search";
+	}
+	
 	@RequestMapping("search")
 	public String search(int searchSeq, Model model) throws Exception {
 		List<ContactDTO> list = dao.search(searchSeq);
@@ -75,15 +90,15 @@ public class HomeController {
 	@RequestMapping("deleteProc")
 	public String deleteProc(String delSeq) throws Exception {
 		
-		int result = dao.delete(Integer.parseInt(delSeq));
+		int result = dao.deleteBySeq(Integer.parseInt(delSeq));
 		System.out.println("delete 결과 : " +result);
 		return "redirect:toOutput";
 	}
 	
 	@RequestMapping("updateProc")
-	public String updateProc(ContactDTO dto) throws Exception {
+	public String updateProc(String column, String value, int seq) throws Exception {
 		
-		int result = dao.update(dto);
+		int result = dao.update(column, value, seq);
 		System.out.println("update 결과 : " +result);
 		return "redirect:toOutput";
 	}
