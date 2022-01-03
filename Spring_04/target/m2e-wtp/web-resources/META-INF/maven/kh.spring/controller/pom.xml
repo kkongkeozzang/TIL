@@ -41,6 +41,15 @@
 			<version>${org.aspectj-version}</version>
 		</dependency>
 
+		<!-- File Related -->
+		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+
 		<!-- Gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>

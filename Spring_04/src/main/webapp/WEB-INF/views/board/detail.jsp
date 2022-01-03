@@ -20,8 +20,16 @@
 	<form method="post" id="frm">
 		<table border=1>
 			<tr>
-				<td><input type=text name="title" readonly value="${dto.title }">
+				<td><input id="input-test" type=text name="title" readonly value="${dto.title }">
 			</tr>
+			<c:if test="${!empty fileList }">
+			<tr>
+				<td>
+				<c:forEach var="i" items="${fileList}" >
+				<a href="/file/download?oriName=${i.oriName}&sysName=${i.sysName}">${i.oriName }</a><br>
+				</c:forEach>
+			</tr>
+			</c:if>
 			<tr>
 				<td><div  >${dto.contents}</div>
 			</tr>

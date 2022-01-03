@@ -11,6 +11,9 @@
 	
 	<insert id="insert">
 		INSERT INTO board VALUES(board_seq.NEXTVAL, #{writer}, #{title}, #{contents}, DEFAULT, DEFAULT)
+		<selectKey resultType="int" order="AFTER" keyProperty="seq">
+			SELECT board_seq.currval FROM dual
+		</selectKey>
 	</insert>
 	
 	<select id="selectBySeq" resultType="kh.spring.dto.BoardDTO">

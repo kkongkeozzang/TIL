@@ -21,12 +21,9 @@ public class BoardDAO {
 	}
 	
 	
-	public int insert(String writer, String title, String contents) throws Exception {
-		Map<String,String> map = new HashMap<>();
-		map.put("writer", writer);
-		map.put("title", title);
-		map.put("contents", contents);
-		return mybatis.insert("Board.insert",map);
+	public int insert(BoardDTO dto) throws Exception {
+		int result = mybatis.insert("Board.insert",dto);
+		return dto.getSeq();
 	}
 	
 	public BoardDTO selectBySeq(int seq) {

@@ -17,13 +17,16 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 </head>
 <body>
-	<form action="/board/write" method="post">
+	<form action="/board/write" method="post" enctype="multipart/form-data">
 		<table border=1>
 			<tr>
 				<td><input type=text name="title">
 			</tr>
 			<tr>
 				<td><textarea id="summernote" name=contents></textarea>
+			</tr>
+			<tr>
+				<td><input type=file multiple name=file>
 			</tr>
 			<tr>
 				<td><button type=button id="toBoard">목록으로</button>
