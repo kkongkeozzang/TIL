@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kh.spring.dao.MemberDAO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.service.MemberService;
 
 
 @Controller
@@ -20,7 +20,7 @@ public class MemberController {
 	
 	
 	@Autowired
-	private MemberDAO dao;
+	private MemberService mService;
 	
 	@Autowired
 	private HttpSession session;
@@ -34,7 +34,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="idDuplCheck", produces="text/html;charset=utf8")
 	public String idDuplCheck(String id) throws Exception {
-		int result = dao.idDuplCheck(id);
+		int result = mService.idDuplCheck(id);
 		System.out.println(result);
 		return String.valueOf(result);
 	}
@@ -42,14 +42,14 @@ public class MemberController {
 	@RequestMapping("signUp")
 	public String inputProc(MemberDTO dto) throws Exception {
 		
-		int result = dao.insert(dto);
+		int result = mService.insert(dto);
 		return "home";
 	}
 	
 	@RequestMapping("login")
 	public String login(String id, String pw) throws Exception {
 		
-		int result = dao.login(id, pw);
+		int result = mService.login(id, pw);
 		if(result >0) {
 			session.setAttribute("loginID", id);
 		}
@@ -66,7 +66,7 @@ public class MemberController {
 	@RequestMapping("leave")
 	public String leave() throws Exception {
 		
-		int result = dao.delete((String)session.getAttribute("loginID"));
+		int result = mService.delete((String)session.getAttribute("loginID"));
 		session.invalidate();
 		return "redirect:/";
 	}
@@ -74,7 +74,7 @@ public class MemberController {
 	@RequestMapping("mypage")
 	public String mypage(Model model) throws Exception {
 		
-		MemberDTO dto = dao.selectById((String)session.getAttribute("loginID"));
+		MemberDTO dto = mService.selectById((String)session.getAttribute("loginID"));
 		model.addAttribute("dto",dto);
 		return "/member/myPage";
 	}
@@ -82,7 +82,7 @@ public class MemberController {
 	@RequestMapping("modify")
 	public String modify(MemberDTO dto) throws Exception {
 		System.out.println("수정요청");
-		int result = dao.modify(dto);
+		int result = mService.modify(dto);
 		return "redirect:mypage";
 	}
 	

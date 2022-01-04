@@ -1,8 +1,6 @@
 package kh.spring.controller;
 
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,27 +11,27 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import kh.spring.dao.BoardDAO;
-import kh.spring.dao.FilesDAO;
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.FilesDTO;
+import kh.spring.service.BoardService;
+import kh.spring.service.FileService;
 
 @Controller
 @RequestMapping("/board/")
 public class BoardController {
 	
 	@Autowired
-	private BoardDAO dao;
+	private BoardService bService;
 	
 	@Autowired
-	private FilesDAO fdao;
+	private FileService fService;
 	
 	@Autowired
 	private HttpSession session;
 	
 	@RequestMapping("list")
 	public String list(Model model) {
-		List<BoardDTO> list = dao.selectAll();
+		List<BoardDTO> list = bService.selectAll();
 		model.addAttribute("list",list);
 		return "board/list";
 	}
@@ -49,28 +47,20 @@ public class BoardController {
 		
 		String writer = (String)session.getAttribute("loginID");
 		dto.setWriter(writer);
-		int parentSeq = dao.insert(dto);
-		
-		for(MultipartFile mf : file) {
-			if(!mf.isEmpty()) {
-				String realPath = session.getServletContext().getRealPath("upload");
-				File realPathFile = new File(realPath);
-				if(!realPathFile.exists()) {realPathFile.mkdir();}
-				
-				String oriName = mf.getOriginalFilename();
-				String sysName = UUID.randomUUID()+"_"+oriName;
-				
-				mf.transferTo(new File(realPath+"/"+sysName)); // 첨부된 파일 폴더에 업로드 하는 부분 
-				fdao.insert(new FilesDTO(0, oriName, sysName, parentSeq));  // 첨부된 파일 정보를 DB에 저장하는 부분
-			}
+		int parentSeq = bService.insert(dto);
+		String realPath = session.getServletContext().getRealPath("upload");
+		List<FilesDTO> fileList = fService.getFileList(realPath, parentSeq, file);
+		for(FilesDTO fdto : fileList) {
+			fService.insert(fdto);
 		}
+		
 		return "redirect:/board/list";
 	}
 	
 	@RequestMapping("detail")
 	public String detail(int seq, Model model) throws Exception {
-		BoardDTO dto = dao.selectBySeq(seq);
-		List<FilesDTO> fileList= fdao.selectAll(seq);
+		BoardDTO dto = bService.selectBySeq(seq);
+		List<FilesDTO> fileList= fService.selectAll(seq);
 		model.addAttribute("fileList", fileList);
 		model.addAttribute("dto",dto);
 		return "board/detail";
@@ -78,20 +68,20 @@ public class BoardController {
 	
 	@RequestMapping("delete")
 	public String delete(int seq) {
-		int result = dao.delete(seq);
+		int result = bService.delete(seq);
 		return "redirect:/board/list";
 	}
 	
 	@RequestMapping("modify")
 	public String modify(int seq, Model model) {
-		BoardDTO dto = dao.selectBySeq(seq);
+		BoardDTO dto = bService.selectBySeq(seq);
 		model.addAttribute("dto",dto);
 		return "board/modify";
 	}
 	
 	@RequestMapping("modifyOk")
 	public String modifyOk(BoardDTO dto) {
-		int result = dao.modify(dto);
+		int result = bService.modify(dto);
 		return "redirect:/board/list";
 	}
 	

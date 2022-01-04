@@ -24,6 +24,16 @@
 	
 	<context:component-scan base-package="kh.spring" />
 	
-	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/login"/>
+			<exclude-mapping path="/toInput"/>
+			<exclude-mapping path="/images/**"/>
+			<exclude-mapping path="/css/**"/>
+			<beans:bean class="kh.spring.interceptor.TestInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

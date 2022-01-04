@@ -2,20 +2,25 @@ package kh.spring.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kh.spring.dao.ContactDAO;
 import kh.spring.dto.ContactDTO;
+import kh.spring.service.ContactService;
 
 @Controller
 public class HomeController {
 	
 	@Autowired
-	public ContactDAO dao;
+	public ContactService service;
+	
+	@Autowired
+	public HttpSession session;
 	
 	@RequestMapping("/")
 	public String home() {
@@ -34,7 +39,7 @@ public class HomeController {
 		//String name = request.getParameter("name");
 		//String contact = request.getParameter("contact");
 		System.out.println(dto.getName() + " : " + dto.getContact());
-		int result = dao.insert(dto);
+		int result = service.insert(dto);
 		return "redirect:/";
 	}
 	
@@ -58,8 +63,8 @@ public class HomeController {
 	@RequestMapping("toOutput")
 	public String outputProc(Model model) throws Exception {
 		
-		List<ContactDTO> list = dao.selectAll();
-		int count = dao.selectCount();
+		List<ContactDTO> list = service.selectAll();
+		int count = service.selectCount();
 		model.addAttribute("list", list);
 		model.addAttribute("count", count);
 		return "output";
@@ -72,7 +77,7 @@ public class HomeController {
 	
 	@RequestMapping("searchByMultiCon")
 	public String multiSearch(ContactDTO dto) {
-		List<ContactDTO> list = dao.searchByMultiCon(dto);
+		List<ContactDTO> list = service.searchByMultiCon(dto);
 		
 		for(ContactDTO dtos : list) {
 			System.out.println(dtos.getSeq() +":"+ dtos.getName() +":"+ dtos.getContact());
@@ -82,7 +87,7 @@ public class HomeController {
 	
 	@RequestMapping("search")
 	public String search(int searchSeq, Model model) throws Exception {
-		List<ContactDTO> list = dao.search(searchSeq);
+		List<ContactDTO> list = service.search(searchSeq);
 		model.addAttribute("list", list);
 		return "output";
 	}
@@ -90,7 +95,7 @@ public class HomeController {
 	@RequestMapping("deleteProc")
 	public String deleteProc(String delSeq) throws Exception {
 		
-		int result = dao.deleteBySeq(Integer.parseInt(delSeq));
+		int result = service.deleteBySeq(Integer.parseInt(delSeq));
 		System.out.println("delete 결과 : " +result);
 		return "redirect:toOutput";
 	}
@@ -98,12 +103,16 @@ public class HomeController {
 	@RequestMapping("updateProc")
 	public String updateProc(String column, String value, int seq) throws Exception {
 		
-		int result = dao.update(column, value, seq);
+		int result = service.update(column, value, seq);
 		System.out.println("update 결과 : " +result);
 		return "redirect:toOutput";
 	}
 	
-	
+	@RequestMapping("login")
+	public String login() {
+		session.setAttribute("loginID", "ID");
+		return "redirect:/";
+	}
 	
 	@ExceptionHandler(Exception.class)
 	public String exceptionHandler(Exception e) {

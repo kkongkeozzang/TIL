@@ -32,5 +32,19 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10485760"/>
 	</beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/member/login"/>
+			<exclude-mapping path="/member/idDuplCheck"/>
+			<exclude-mapping path="/member/join"/>
+			<exclude-mapping path="/member/signUp"/>
+			<exclude-mapping path="/images/**"/>
+			<exclude-mapping path="/css/**"/>
+			<beans:bean class="kh.spring.interceptor.TestInterceptor"/>
+		</interceptor>
+	</interceptors>
 
 </beans:beans>
