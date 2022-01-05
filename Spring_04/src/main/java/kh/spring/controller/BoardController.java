@@ -38,22 +38,15 @@ public class BoardController {
 	
 	@RequestMapping("writeForm")
 	public String writeForm() {
-		
 		return "board/writeForm";
 	}
 	
 	@RequestMapping("write")
 	public String write(BoardDTO dto, MultipartFile[] file) throws Exception {
-		
 		String writer = (String)session.getAttribute("loginID");
 		dto.setWriter(writer);
-		int parentSeq = bService.insert(dto);
 		String realPath = session.getServletContext().getRealPath("upload");
-		List<FilesDTO> fileList = fService.getFileList(realPath, parentSeq, file);
-		for(FilesDTO fdto : fileList) {
-			fService.insert(fdto);
-		}
-		
+		bService.write(dto,realPath,file);
 		return "redirect:/board/list";
 	}
 	
