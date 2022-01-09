@@ -126,6 +126,7 @@ img{
 		<br>
 		<a href="/board/list">자유게시판</a>
 		<a href="/member/mypage">마이페이지</a>
+		<a href="/chat/toChat">채팅방입장</a>
 		</c:when>
 		<c:otherwise>
 			<div class="login-form">
