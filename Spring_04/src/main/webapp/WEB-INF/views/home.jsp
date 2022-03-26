@@ -118,8 +118,6 @@ img{
 </style>
 <body>
 
-	<c:choose>
-		<c:when test="${loginID != null}">
 		${loginID }님 환영합니다.<br>
 		<a href="/member/logout">로그아웃</a>
 		<a href="/member/leave">회원탈퇴</a>
@@ -127,11 +125,7 @@ img{
 		<a href="/board/list">자유게시판</a>
 		<a href="/member/mypage">마이페이지</a>
 		<a href="/chat/toChat">채팅방입장</a>
-		</c:when>
-		<c:otherwise>
-			<a href="/member/toLogin">로그인하기</a>
-		</c:otherwise>
-	</c:choose>
+		<a href="/member/toLogin">로그인하기</a>
 <script>
 	$("#join").on("click",function(){
 		location.href="/member/join";
