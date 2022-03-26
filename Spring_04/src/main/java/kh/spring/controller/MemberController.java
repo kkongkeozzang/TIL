@@ -25,6 +25,11 @@ public class MemberController {
 	@Autowired
 	private HttpSession session;
 	
+	@RequestMapping("toLogin")
+	public String toLogin() {
+		return "/member/login";
+	}
+	
 	@RequestMapping("join")
 	public String memberJoin() {
 		System.out.println("Join 페이지 동작");

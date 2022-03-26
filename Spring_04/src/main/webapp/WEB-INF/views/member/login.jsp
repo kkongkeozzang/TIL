@@ -129,7 +129,17 @@ img{
 		<a href="/chat/toChat">채팅방입장</a>
 		</c:when>
 		<c:otherwise>
-			<a href="/member/toLogin">로그인하기</a>
+			<div class="login-form">
+			<form action="/member/login" method="post">
+		    <img src="/images/강아지.jpg">
+		    <div class="form-group "> <input type="text" class="form-control" placeholder="Username " name="id"> <i class="mdi mdi-account"></i> </div>
+		    <div class="form-group log-status"> <input type="password" class="form-control" placeholder="Password" name="pw"> <i class="mdi mdi-lock"></i> </div> <span class="alert">Invalid Credentials</span>
+		     <a class="link" href="#">Lost your password?</a> 
+		     <button type="submit" class="log-btn"><i class="mdi mdi-account"></i> Log in</button>
+		     <button type="button" class="log-btn" id="join"><i class="mdi mdi-account"></i> Join</button>
+		     </form>
+		</div>
+		
 		</c:otherwise>
 	</c:choose>
 <script>
