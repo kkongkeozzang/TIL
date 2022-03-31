@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.6.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<security:http auto-config="true" use-expressions="false">
+		<security:csrf disabled="true"/> 
+		<security:form-login login-page="/member/toLogin" login-processing-url="/member/login" 
+			username-parameter="id" password-parameter="pw"/>
+		<security:intercept-url pattern="/board/**" access="ROLE_USER" />
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="user" password="{noop}password" authorities="ROLE_USER" />
+				<security:user name="sss" password="{noop}sss" authorities="ROLE_USER" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+</beans>

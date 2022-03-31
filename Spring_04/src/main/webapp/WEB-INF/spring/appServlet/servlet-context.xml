@@ -35,7 +35,7 @@
 	</beans:bean>
 	
 	<aop:aspectj-autoproxy/>
-	
+	<!-- 
 	<interceptors>
 		<interceptor>
 			<mapping path="/**"/>
@@ -49,5 +49,5 @@
 			<beans:bean class="kh.spring.interceptor.TestInterceptor"/>
 		</interceptor>
 	</interceptors>
-
+	 -->
 </beans:beans>
