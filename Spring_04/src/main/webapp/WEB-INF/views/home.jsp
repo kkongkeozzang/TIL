@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -117,15 +118,22 @@ img{
 }
 </style>
 <body>
-
-		${loginID }님 환영합니다.<br>
-		<a href="/member/logout">로그아웃</a>
-		<a href="/member/leave">회원탈퇴</a>
+		<sec:authorize access="authenticated" var="authenticated"/>
+		<c:choose>
+			<c:when test="${authenticated }">
+				<sec:authentication property="name" var="id"/>
+				${id }님 환영합니다.<br>
+				<a href="/member/logout">로그아웃</a>
+				<a href="/member/leave">회원탈퇴</a>
+			</c:when>
+			<c:otherwise>
+				<a href="/member/toLogin">로그인하기</a>				
+			</c:otherwise>
+		</c:choose>
 		<br>
 		<a href="/board/list">자유게시판</a>
 		<a href="/member/mypage">마이페이지</a>
 		<a href="/chat/toChat">채팅방입장</a>
-		<a href="/member/toLogin">로그인하기</a>
 <script>
 	$("#join").on("click",function(){
 		location.href="/member/join";
