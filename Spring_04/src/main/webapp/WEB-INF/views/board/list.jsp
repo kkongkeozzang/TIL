@@ -39,7 +39,9 @@
         		<td colspan=5 align=right><button id="write">글쓰기</button>
         	</tr>
         </tfoot>
+        
     </table>
+    <a href="/">돌아가기</a>
 	    
     <script>
     $("myTable").ready(function() {
