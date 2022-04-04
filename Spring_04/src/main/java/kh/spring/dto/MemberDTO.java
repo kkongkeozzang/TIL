@@ -8,17 +8,19 @@ public class MemberDTO {
 	private String name;
 	private String email;
 	private Date signup_date;
+	private String role;
 	public MemberDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public MemberDTO(String id, String pw, String name, String email, Date signup_date) {
+	public MemberDTO(String id, String pw, String name, String email, Date signup_date, String role) {
 		super();
 		this.id = id;
 		this.pw = pw;
 		this.name = name;
 		this.email = email;
 		this.signup_date = signup_date;
+		this.role = role;
 	}
 	public String getId() {
 		return id;
@@ -50,6 +52,13 @@ public class MemberDTO {
 	public void setSignup_date(Date signup_date) {
 		this.signup_date = signup_date;
 	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
 	
 	
 }
