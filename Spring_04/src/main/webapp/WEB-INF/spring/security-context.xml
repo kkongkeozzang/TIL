@@ -10,6 +10,9 @@
 		<security:csrf disabled="true"/> 
 		<security:form-login login-page="/member/toLogin" login-processing-url="/member/login" 
 			username-parameter="id" password-parameter="pw"/>
+			
+		<security:logout logout-url="/member/logout" logout-success-url="/"/>
+			
 		<security:intercept-url pattern="/board/**" access="ROLE_USER" />
 	</security:http>
 
